@@ -459,6 +459,7 @@ public class Venda_Panel extends javax.swing.JFrame {
         public void onResponse(Call<Void> call, Response<Void> response) {
         if (response.isSuccessful()) {
                     java.util.Date date = new java.util.Date(System.currentTimeMillis());
+                    //LEMBRAR DE MUDAR O CAMINHO PARA O DO SEU COMPUTADOR
                     String nomeArquivo = "C:/Users/elias/OneDrive/Documentos/NetBeansProjects/PDV-V4/log/log.txt";
                     File arquivo = new File( nomeArquivo);
                     try {
@@ -474,6 +475,7 @@ public class Venda_Panel extends javax.swing.JFrame {
         } else {
             
                     java.util.Date date = new java.util.Date(System.currentTimeMillis());
+                    //LEMBRAR DE MUDAR O CAMINHO PARA O DO SEU COMPUTADOR
                     String nomeArquivo = "C:/Users/elias/OneDrive/Documentos/NetBeansProjects/PDV-V4/log/log.txt";
                     File arquivo = new File( nomeArquivo);
                     try {
@@ -573,6 +575,7 @@ public class Venda_Panel extends javax.swing.JFrame {
          txtTotalVenda.setText(valorTotal.toString());
          
          java.util.Date date = new java.util.Date(System.currentTimeMillis());
+         //LEMBRAR DE MUDAR O CAMINHO PARA O DO SEU COMPUTADOR
             String nomeArquivo = "C:/Users/elias/OneDrive/Documentos/NetBeansProjects/PDV-V4/log/log.txt";
             File arquivo = new File( nomeArquivo);
             try {

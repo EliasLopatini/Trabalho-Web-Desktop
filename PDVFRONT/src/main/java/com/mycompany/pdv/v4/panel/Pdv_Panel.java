@@ -34,7 +34,6 @@ public class Pdv_Panel extends javax.swing.JFrame {
         btprodutos = new javax.swing.JButton();
         bt2 = new javax.swing.JButton();
         bt3 = new javax.swing.JButton();
-        bt5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,16 +100,6 @@ public class Pdv_Panel extends javax.swing.JFrame {
             }
         });
 
-        bt5.setBackground(new java.awt.Color(112, 151, 178));
-        bt5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        bt5.setForeground(new java.awt.Color(0, 0, 0));
-        bt5.setText("VENDAS SALVAS");
-        bt5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt5ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -119,7 +108,6 @@ public class Pdv_Panel extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(108, 108, 108)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(bt5, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bt3, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bt2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btprodutos)
@@ -141,9 +129,7 @@ public class Pdv_Panel extends javax.swing.JFrame {
                 .addComponent(bt2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bt3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bt5)
-                .addGap(0, 46, Short.MAX_VALUE))
+                .addGap(0, 81, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -206,10 +192,6 @@ public class Pdv_Panel extends javax.swing.JFrame {
          new Cadastro_Produto().setVisible(true);
     }//GEN-LAST:event_btprodutosActionPerformed
 
-    private void bt5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bt5ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -250,7 +232,6 @@ public class Pdv_Panel extends javax.swing.JFrame {
     private javax.swing.JButton bt1;
     private javax.swing.JButton bt2;
     private javax.swing.JButton bt3;
-    private javax.swing.JButton bt5;
     private javax.swing.JButton btcliente;
     private javax.swing.JButton btprodutos;
     private javax.swing.JLabel jLabel1;

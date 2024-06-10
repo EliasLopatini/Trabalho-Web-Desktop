@@ -263,6 +263,7 @@ public class Tabela_produtos extends javax.swing.JFrame {
                 }
             }
             java.util.Date date = new java.util.Date(System.currentTimeMillis());
+            //LEMBRAR DE MUDAR O CAMINHO PARA O DO SEU COMPUTADOR
             String nomeArquivo = "C:/Users/elias/OneDrive/Documentos/NetBeansProjects/PDV-V4/log/log.txt";
             File arquivo = new File( nomeArquivo);
             try {
