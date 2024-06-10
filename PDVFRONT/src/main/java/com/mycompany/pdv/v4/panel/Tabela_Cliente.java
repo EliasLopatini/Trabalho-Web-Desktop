@@ -5,8 +5,10 @@
 package com.mycompany.pdv.v4.panel;
 
 import com.mycompany.pdv.v4.ConectionInterface.ClienteInterface;
+import static com.mycompany.pdv.v4.PDVV4.gerarLog;
 import com.mycompany.pdv.v4.dto.ClienteDto;
 import com.mycompany.pdv.v4.models.Cliente;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,7 +28,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class Tabela_Cliente extends javax.swing.JFrame {
 
- 
+    private static final String LOG_DIRECTORY = "log";
+    private static final String LOG_FILE_NAME = "log_operacao.txt";
+    private static final File logFile = new File(LOG_DIRECTORY, LOG_FILE_NAME);
     public Tabela_Cliente() {
         initComponents();
         
@@ -262,18 +266,14 @@ public class Tabela_Cliente extends javax.swing.JFrame {
                 }
             }
 
-            
-            java.util.Date date = new java.util.Date(System.currentTimeMillis());
-            //LEMBRAR DE MUDAR O CAMINHO PARA O DO SEU COMPUTADOR
-            String nomeArquivo = "C:/Users/elias/OneDrive/Documentos/NetBeansProjects/PDV-V4/log/log.txt";
-            File arquivo = new File( nomeArquivo);
-            try {
-           
-            FileWriter writer = new FileWriter(arquivo);
-              System.out.println("ARQUIVO LOG ATUALIZADO");
-              writer.write("OPERAÇÃO:SELEÇÃO DO CLIENTE, STATUS:SUCESSO"+date+"\n");
-              writer.close();
-        } catch (IOException e) {
+      
+             java.util.Date date = new java.util.Date(System.currentTimeMillis());
+
+          try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
+               System.out.println("Arquivo log atualizado com sucesso!");
+        writer.write("OPERAÇÃO:SELEÇÃO CLIENTE, STATUS:SUCESSO, "+date+"\n");
+        writer.newLine();
+        }  catch (IOException e) {
                     
             e.printStackTrace();
         }

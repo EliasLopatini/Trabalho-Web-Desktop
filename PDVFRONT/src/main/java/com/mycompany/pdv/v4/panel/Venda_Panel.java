@@ -7,6 +7,7 @@ import com.mycompany.pdv.v4.dto.ProdutoDto;
 import com.mycompany.pdv.v4.models.Cliente;
 import com.mycompany.pdv.v4.models.Venda;
 import com.mycompany.pdv.v4.service.VendaService;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,12 +22,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Venda_Panel extends javax.swing.JFrame {
 
     
-    
+    private static final String LOG_DIRECTORY = "log";
+    private static final String LOG_FILE_NAME = "log_operacao.txt";
+    private static final File logFile = new File(LOG_DIRECTORY, LOG_FILE_NAME);
     private Double valorTotal = 0.0;
     private VendaInterface vendaInterface;
     private String quantidadeProduto;
-    ClienteDto clientePassado = new ClienteDto();
-    ProdutoDto produtoPassado = new ProdutoDto();
+    ClienteDto clienteInsercao = new ClienteDto();
+    ProdutoDto produtoInsercao = new ProdutoDto();
     DefaultTableModel defaultTableModel = new DefaultTableModel(new Object[]{"Cod", "Descrição", "Valor unit", "Qtd", "Valor total"}, 0);
    
 
@@ -450,7 +453,7 @@ public class Venda_Panel extends javax.swing.JFrame {
         venda.setObservacoes(txtObs.getText());//        "observacoes"
 //        venda.setData(date);//  "data"
         venda.setTotal(Double.parseDouble(txtTotalVenda.getText()));//  "total"  
-        venda.setCliente(new Cliente(clientePassado.id, clientePassado.nome, clientePassado.email, clientePassado.telefone));
+        venda.setCliente(new Cliente(clienteInsercao.id, clienteInsercao.nome, clienteInsercao.email, clienteInsercao.telefone));
 
         Call<Void> call = vendaService.insertVenda(venda);
 
@@ -458,33 +461,28 @@ public class Venda_Panel extends javax.swing.JFrame {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
         if (response.isSuccessful()) {
-                    java.util.Date date = new java.util.Date(System.currentTimeMillis());
-                    //LEMBRAR DE MUDAR O CAMINHO PARA O DO SEU COMPUTADOR
-                    String nomeArquivo = "C:/Users/elias/OneDrive/Documentos/NetBeansProjects/PDV-V4/log/log.txt";
-                    File arquivo = new File( nomeArquivo);
-                    try {
-                    System.out.println("ARQUICO LOG ATUALIZADO");
-                     FileWriter writer = new FileWriter(arquivo,true);
-                     writer.write("OPERAÇÃO:INSERT DE VENDA, STATUS:SUCESSO"+date+"\n");
-                    writer.close();
-        } catch (IOException e) {
+                   java.util.Date date = new java.util.Date(System.currentTimeMillis());
+
+          try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
+               System.out.println("Arquivo log atualizado com sucesso!");
+        writer.write("OPERAÇÃO:INSERT VENDA, STATUS:SUCESSO, "+date+"\n");
+        writer.newLine();
+        }  catch (IOException e) {
                     
             e.printStackTrace();
         }
         
         } else {
             
-                    java.util.Date date = new java.util.Date(System.currentTimeMillis());
-                    //LEMBRAR DE MUDAR O CAMINHO PARA O DO SEU COMPUTADOR
-                    String nomeArquivo = "C:/Users/elias/OneDrive/Documentos/NetBeansProjects/PDV-V4/log/log.txt";
-                    File arquivo = new File( nomeArquivo);
-                    try {
-                     FileWriter writer = new FileWriter(arquivo);
-                     writer.write("OPERAÇÃO:INSERT DE VENDA, STATUS:ERRO"+date+"\n");
-                    writer.close();
-                    } catch (IOException e) {
+    java.util.Date date = new java.util.Date(System.currentTimeMillis());
+
+          try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
+               System.out.println("Arquivo log atualizado com sucesso!");
+        writer.write("OPERAÇÃO:INSERT VENDA, STATUS:ERRO, "+date+"\n");
+        writer.newLine();
+        }  catch (IOException e) {
                     
-                     e.printStackTrace();
+            e.printStackTrace();
         }
         }
         }
@@ -547,15 +545,15 @@ public class Venda_Panel extends javax.swing.JFrame {
     }//GEN-LAST:event_formFocusGained
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        if (clientePassado.id != null) {
-            txtCodigoCliente.setText(clientePassado.id.toString());
-            txtNomeCliente1.setText(clientePassado.nome);
+        if (clienteInsercao.id != null) {
+            txtCodigoCliente.setText(clienteInsercao.id.toString());
+            txtNomeCliente1.setText(clienteInsercao.nome);
         }
 
-        if (produtoPassado.id != null) {
-            txtCod.setText(produtoPassado.id.toString());
-            txtDescricaoProduto.setText(produtoPassado.descricao);
-            txtValorUnitario.setText(produtoPassado.preco.toString());
+        if (produtoInsercao.id != null) {
+            txtCod.setText(produtoInsercao.id.toString());
+            txtDescricaoProduto.setText(produtoInsercao.descricao);
+            txtValorUnitario.setText(produtoInsercao.preco.toString());
         }
     }//GEN-LAST:event_formWindowGainedFocus
 
@@ -566,24 +564,21 @@ public class Venda_Panel extends javax.swing.JFrame {
             quantidadeProduto = txtQtd.getText();
         }
 
-        valorTotal += produtoPassado.preco * Double.parseDouble(quantidadeProduto);
+        valorTotal += produtoInsercao.preco * Double.parseDouble(quantidadeProduto);
 
-        defaultTableModel.addRow(new Object[]{produtoPassado.id.toString(),
-            produtoPassado.descricao.toString(), produtoPassado.preco.toString(),
-            quantidadeProduto, produtoPassado.preco * Double.parseDouble(quantidadeProduto)});
+        defaultTableModel.addRow(new Object[]{produtoInsercao.id.toString(),
+            produtoInsercao.descricao.toString(), produtoInsercao.preco.toString(),
+            quantidadeProduto, produtoInsercao.preco * Double.parseDouble(quantidadeProduto)});
 
          txtTotalVenda.setText(valorTotal.toString());
          
          java.util.Date date = new java.util.Date(System.currentTimeMillis());
-         //LEMBRAR DE MUDAR O CAMINHO PARA O DO SEU COMPUTADOR
-            String nomeArquivo = "C:/Users/elias/OneDrive/Documentos/NetBeansProjects/PDV-V4/log/log.txt";
-            File arquivo = new File( nomeArquivo);
-            try {
-             System.out.println("ARQUIVO LOG ATUALIZADO");
-            FileWriter writer = new FileWriter(arquivo, true);
-              writer.write("OPERAÇÃO:USO DO PRODUTO, STATUS:SUCESSO"+date+"\n");
-              writer.close();
-        } catch (IOException e) {
+
+          try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
+               System.out.println("Arquivo log atualizado com sucesso!");
+        writer.write("OPERAÇÃO:INSERINDO PRODUTO NA VENDA, STATUS:SUCESSO, "+date+"\n");
+        writer.newLine();
+        }  catch (IOException e) {
                     
             e.printStackTrace();
         }

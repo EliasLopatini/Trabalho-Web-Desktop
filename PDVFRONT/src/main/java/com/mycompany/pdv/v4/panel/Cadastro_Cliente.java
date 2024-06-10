@@ -5,11 +5,13 @@
 package com.mycompany.pdv.v4.panel;
 
 import com.mycompany.pdv.v4.ConectionInterface.ClienteInterface;
+import static com.mycompany.pdv.v4.PDVV4.gerarLog;
 import com.mycompany.pdv.v4.models.Cliente;
 import com.mycompany.pdv.v4.service.ClienteService;
 import com.mycompany.pdv.v4.dto.ClienteDto;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,11 +24,16 @@ import retrofit2.Response;
  */
 public class Cadastro_Cliente extends javax.swing.JFrame {
 
+    
+    private static final String LOG_DIRECTORY = "log";
+    private static final String LOG_FILE_NAME = "log_operacao.txt";
+    private static final File logFile = new File(LOG_DIRECTORY, LOG_FILE_NAME);
     /**
      * Creates new form Cadastro_Clientev2
      */
     public Cadastro_Cliente() {
         initComponents();
+  
     }
     
 
@@ -257,28 +264,23 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
         if (response.isSuccessful()) {
-            java.util.Date date = new java.util.Date(System.currentTimeMillis());
-                    String nomeArquivo = "C:/Users/elias/OneDrive/Documentos/NetBeansProjects/PDV-V4/log/log.txt";
-                    File arquivo = new File( nomeArquivo);
-                    try {
-                    System.out.println("ARQUICO LOG ATUALIZADO");
-                     FileWriter writer = new FileWriter(arquivo,true);
-                     writer.write("OPERAÇÃO:INSERT DE CLIENTE, STATUS:SUCESSO"+date+"\n");
-                    writer.close();
+         java.util.Date date = new java.util.Date(System.currentTimeMillis());
+
+          try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
+               System.out.println("Arquivo log atualizado com sucesso!");
+        writer.write("OPERAÇÃO:INSERT CLIENTE, STATUS:SUCESSO, "+date+"\n");
+        writer.newLine();
         } catch (IOException e) {
-                    
-            e.printStackTrace();
+        e.printStackTrace();
         }
         } else {
-           java.util.Date date = new java.util.Date(System.currentTimeMillis());
-                    String nomeArquivo = "C:/Users/elias/OneDrive/Documentos/NetBeansProjects/PDV-V4/log/log.txt";
-                    File arquivo = new File( nomeArquivo);
-                    try {
-                    System.out.println("ARQUICO LOG ATUALIZADO");
-                     FileWriter writer = new FileWriter(arquivo,true);
-                     writer.write("OPERAÇÃO:INSERT DE CLIENTE, STATUS:ERRO"+date+"\n");
-                    writer.close();
-        } catch (IOException e) {
+             java.util.Date date = new java.util.Date(System.currentTimeMillis());
+
+          try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
+               System.out.println("Arquivo log atualizado com sucesso!");
+        writer.write("OPERAÇÃO:INSERT CLIENTE, STATUS:ERRO, "+date+"\n");
+        writer.newLine();
+        }  catch (IOException e) {
                     
             e.printStackTrace();
         }

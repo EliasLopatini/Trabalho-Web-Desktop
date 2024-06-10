@@ -6,10 +6,12 @@ package com.mycompany.pdv.v4.panel;
 
 import com.mycompany.pdv.v4.ConectionInterface.ClienteInterface;
 import com.mycompany.pdv.v4.ConectionInterface.ProdutoInterface;
+
 import com.mycompany.pdv.v4.dto.ProdutoDto;
 import com.mycompany.pdv.v4.models.Cliente;
 import java.util.List;
 import com.mycompany.pdv.v4.models.Produto;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,9 +31,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class Tabela_produtos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Cadastro_Clientev2
-     */
+    private static final String LOG_DIRECTORY = "log";
+    private static final String LOG_FILE_NAME = "log_operacao.txt";
+    private static final File logFile = new File(LOG_DIRECTORY, LOG_FILE_NAME);
     
     TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<>();
     ProdutoDto passarProduto = new ProdutoDto();
@@ -263,19 +265,16 @@ public class Tabela_produtos extends javax.swing.JFrame {
                 }
             }
             java.util.Date date = new java.util.Date(System.currentTimeMillis());
-            //LEMBRAR DE MUDAR O CAMINHO PARA O DO SEU COMPUTADOR
-            String nomeArquivo = "C:/Users/elias/OneDrive/Documentos/NetBeansProjects/PDV-V4/log/log.txt";
-            File arquivo = new File( nomeArquivo);
-            try {
-            
-            FileWriter writer = new FileWriter(arquivo, true);
-                System.out.println("ARQUIVO LOG ATUALIZADO");
-              writer.write("OPERAÇÃO:SELEÇÃO DO  PRODUTO, STATUS:SUCESSO"+date+"\n");
-              writer.close();
-        } catch (IOException e) {
+
+          try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
+               System.out.println("Arquivo log atualizado com sucesso!");
+            writer.write("OPERAÇÃO:SELEÇÃO PRODUTO, STATUS:SUCESSO, "+date+"\n");
+        writer.newLine();
+        }  catch (IOException e) {
                     
             e.printStackTrace();
         }
+           
             this.dispose();
     }//GEN-LAST:event_btSelecionarClienteActionPerformed
 
